@@ -102,8 +102,8 @@ BOARD_KERNEL_BASE := 0x00000000
 BOARD_KERNEL_CMDLINE := \
     video=vfb:640x400,bpp=32,memsize=3072000 \
     disable_dma32=on \
-    swinfo.fingerprint=$(LINEAGE_VERSION) \
-    mtdoops.fingerprint=$(LINEAGE_VERSION)
+    swinfo.fingerprint=$(CUSTOM_VERSION) \
+    mtdoops.fingerprint=$(CUSTOM_VERSION)
 
 BOARD_BOOTCONFIG := \
     androidboot.hardware=qcom \
@@ -122,6 +122,8 @@ BOARD_USES_GENERIC_KERNEL_IMAGE := true
 
 # Kill lineage kernel build task while preserving kernel
 TARGET_NO_KERNEL_OVERRIDE := true
+TARGET_FORCE_PREBUILT_KERNEL := true
+TARGET_KERNEL_CONFIG := marble_defconfig
 
 # Workaround to make lineage's soong generator work
 TARGET_KERNEL_SOURCE := $(KERNEL_PATH)/kernel-headers
@@ -161,10 +163,11 @@ TARGET_OTA_ASSERT_DEVICE := marble, marblein
 # Partitions
 BOARD_FLASH_BLOCK_SIZE := 262144
 
-BOARD_DTBOIMG_PARTITION_SIZE := 25165824
-BOARD_BOOTIMAGE_PARTITION_SIZE := 201326592
-BOARD_RECOVERYIMAGE_PARTITION_SIZE := 104857600
-BOARD_VENDOR_BOOTIMAGE_PARTITION_SIZE := 100663296
+BOARD_SYSTEMIMAGE_PARTITION_RESERVED_SIZE := 536870912
+BOARD_SYSTEM_EXTIMAGE_PARTITION_RESERVED_SIZE := 536870912
+BOARD_PRODUCTIMAGE_PARTITION_RESERVED_SIZE := 536870912
+BOARD_VENDORIMAGE_PARTITION_RESERVED_SIZE := 536870912
+BOARD_VENDOR_DLKMIMAGE_PARTITION_RESERVED_SIZE := 33554432
 
 BOARD_SUPER_PARTITION_SIZE := 9663676416
 BOARD_SUPER_PARTITION_GROUPS := qti_dynamic_partitions
@@ -252,7 +255,7 @@ DEVICE_MANIFEST_UKEE_FILES := \
 DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE := \
     $(CONFIGS_PATH)/vintf/vendor_framework_compatibility_matrix.xml \
     $(CONFIGS_PATH)/vintf/xiaomi_framework_compatibility_matrix.xml \
-    vendor/lineage/config/device_framework_matrix.xml
+    vendor/aosp/config/device_framework_matrix.xml
 ODM_MANIFEST_SKUS += marble
 ODM_MANIFEST_MARBLE_FILES := $(CONFIGS_PATH)/vintf/manifest_nfc.xml
 
